@@ -11,7 +11,18 @@ pip install deContamination-*.whl
 
 
 ## 2. Load Simulation Data
-We proide a simulated data for testing
+To inspect the generated data (optional):
+```python
+import numpy as np
+
+# Load observed data
+Y_obs = np.loadtxt("./data/Y_obs.txt", dtype=int)
+print("Y_obs shape:", Y_obs.shape)  # Should be (300, 10000)
+
+# Load neighbor list
+nei_list = np.loadtxt("./data/nei_list.txt", dtype=int)
+print("nei_list shape:", nei_list.shape)  # Should be (10000, 49)
+```
 
 
 ## 3. Run DeLeakage
@@ -82,24 +93,11 @@ Run it:
 python3 test_decontamination.py
 ```
 
-## 4. Convert Results
-To analyze our result, run `decon.py` to covert the output results into decontaminated expression matrix.
 
-## 5. Visualize Results
-Using `plot_results.py` to compare true, raw vs. decontaminated data:
-
-Run it:
-```bash
-python .\scripts\plot_results.py --gex .\True\Y_true.txt --gene .\dataDir\Gene.csv --cell .\dataDir\Cell_meta.csv --marker .\dataDir\marker.json --output .\eval_True
-
-python .\scripts\plot_results.py --gex .\dataDir\Count.mtx --gene .\dataDir\Gene.csv --cell .\dataDir\Cell_meta.csv --marker .\dataDir\marker.json --output .\eval_Raw
-
-python .\scripts\plot_results.py --gex .\our\decon_fact_vol.txt --gene .\dataDir\Gene.csv --cell .\dataDir\Cell_meta.csv --marker .\dataDir\marker.json --output .\eval_our
-
-```
+## 4. Visualize Results
 
 
-## 6. Input/Output Summary
+## 5. Input/Output Summary
 ### Inputs (./data/)
 - `Y_obs.txt`: Observed expression matrix (genes x cells)
 - `nei_list.txt`: Neighbor indices for each cell
@@ -109,7 +107,7 @@ python .\scripts\plot_results.py --gex .\our\decon_fact_vol.txt --gene .\dataDir
 - `MB/`: Microball data directory
 
 ### Outputs (./output/)
-- Decontaminated expression matrix
+- Decontaminated expression matrix (e.g., `Y_pred.txt`)
 - Log files/other intermediate results
 
 

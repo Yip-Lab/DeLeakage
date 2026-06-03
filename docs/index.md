@@ -1,12 +1,17 @@
+
 # <span style="color: black;">**DeLeakage**</span>
 We are excited to release DeLeakage v1.0! To install, please follow the instructions in our [install page](install.md).
+
+<p align="center">
+  <img src="images/workflow.png" width="100%" alt="DeLeakage Workflow">
+</p>
 
 ## **Overview**
 
 To tackle the transcript leakage problem, we propose a Bayesian hierarchical model-based method, **DeLeakage** (**De**contamination for Transcript **Leakage**), which decomposes the observed transcript counts of each cell into its endogenous expression and transcripts leaked from other cells through a diffusion process Our model includes a different diffusion parameter for each gene, thus allowing the capture of gene-specific properties that affect leakage patterns.
 
 
-## License
+## **License**
 
 Copyright (c) 2026 DeLeakage authors
 
