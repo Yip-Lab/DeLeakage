@@ -1,4 +1,4 @@
-# deContamination
+# DeLeakage
 
 Python bindings for the `Contamination` C++ implementation, built with `pybind11`, `CMake`, and OpenMP.
 
