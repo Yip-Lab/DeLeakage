@@ -126,6 +126,14 @@ Prepare below files before plotting:
 1. Mandatory marker gene plotting: generate paired spatial distribution plots for each marker gene (raw observed vs decontaminated expression);
 2. Custom gene plotting: input arbitrary single/multiple gene names to render their spatial expression patterns on tissue section based on cell spatial coordinates.
 
+<p align="center">
+  <img src="images/Marker_gene_expression.jpg" width="50%" alt="DeLeakage Workflow">
+</p>
+
+<p align="center">
+  <img src="images/DE_gene_expression.jpg" width="50%" alt="DeLeakage Workflow">
+</p>
+
 ### 4.4 Cosine Similarity Quantification & Visualization
 Calculate pairwise gene-wise Cosine similarity between:
 - Observed ↔ pure scRNA-seq
@@ -133,7 +141,7 @@ Calculate pairwise gene-wise Cosine similarity between:
 Use similarity distribution to quantify how DeLeakage recovers native transcriptomic profile from contaminated spatial data.
 
 <p align="center">
-  <img src="images/Cosine_Similarity.png" width="50%" alt="DeLeakage Workflow">
+  <img src="images/Cosine_Similarity.jpg" width="50%" alt="DeLeakage Workflow">
 </p>
 
 ### 4.5 Jaccard Index Calculation
