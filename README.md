@@ -38,27 +38,6 @@ DeLeakage substantially outperforms existing ST denoising methods (SPLIT, SpotCl
 - Tissues: Brain, heart, and all other tissue types
 
 ## Quick Start
-
-```bash
-# Install DeLeakage
-pip install deleakage
-```
-
-```python
-# Basic usage
-import deleakage
-from deleakage import DeLeakage
-
-# Initialize model (adata: AnnData object with spatial coordinates)
-model = DeLeakage(adata, spatial_key="spatial", n_cell_types=10)
-
-# Run decontamination
-model.fit()
-
-# Get corrected expression matrix
-corrected_adata = model.get_corrected_adata()
-```
-
 See our [install page](install.md) and [quickstart](quickstart.md) for detailed tutorials and advanced usage.
 
 ## Citation
