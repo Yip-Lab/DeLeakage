@@ -127,11 +127,11 @@ Prepare below files before plotting:
 2. Custom gene plotting: input arbitrary single/multiple gene names to render their spatial expression patterns on tissue section based on cell spatial coordinates.
 
 <p align="center">
-  <img src="images/Marker_gene_expression.jpg" width="50%" alt="DeLeakage Workflow">
+  <img src="images/Marker.png" width="50%" alt="DeLeakage Workflow">
 </p>
 
 <p align="center">
-  <img src="images/DE_gene_expression.jpg" width="50%" alt="DeLeakage Workflow">
+  <img src="images/DE.png" width="50%" alt="DeLeakage Workflow">
 </p>
 
 ### 4.4 Cosine Similarity Quantification & Visualization
@@ -141,11 +141,15 @@ Calculate pairwise gene-wise Cosine similarity between:
 Use similarity distribution to quantify how DeLeakage recovers native transcriptomic profile from contaminated spatial data.
 
 <p align="center">
-  <img src="images/Cosine_Similarity.jpg" width="50%" alt="DeLeakage Workflow">
+  <img src="images/CS.png" width="50%" alt="DeLeakage Workflow">
 </p>
 
 ### 4.5 Jaccard Index Calculation
 Compute Jaccard index of marker gene detection status across three datasets as another quantitative metric for decontamination efficacy evaluation.
+
+<p align="center">
+  <img src="images/JI.png" width="50%" alt="DeLeakage Workflow">
+</p>
 
 ## 5. Input/Output File Summary
 ### 5.1 Preprocessing Raw Source Input (`Raw Data Folder`)
