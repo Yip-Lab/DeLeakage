@@ -375,10 +375,98 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#correcting-spatial-transcriptomics-data-affected-by-prevalent-transcript-leakage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Correcting spatial transcriptomics data affected by prevalent transcript leakage
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#overview" class="md-nav__link">
     <span class="md-ellipsis">
       
         Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Features
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-highlights" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Performance Highlights
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#supported-data-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Supported Data Types
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Start
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#citation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Citation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#authors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Authors
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#code-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Code &amp; Data
       
     </span>
   </a>
@@ -505,19 +593,82 @@
   
 
 
-<h1 id="deleakage"><span style="color: black;"><strong>DeLeakage</strong></span></h1>
-<p>We are excited to release DeLeakage v1.0! To install, please follow the instructions in our <a href="install/">install page</a>.</p>
+<h1 id="deleakage">DeLeakage</h1>
+<h2 id="correcting-spatial-transcriptomics-data-affected-by-prevalent-transcript-leakage">Correcting spatial transcriptomics data affected by prevalent transcript leakage</h2>
+<p>We are excited to release DeLeakage v1.0! To install, please follow the instructions in our <a href="install/">install page</a>. Try our interactive demo <a href="quickstart/">here</a>.</p>
 <p align="center">
   <img src="images/workflow.png" width="100%" alt="DeLeakage Workflow">
 </p>
 
-<h2 id="overview"><strong>Overview</strong></h2>
-<p>To tackle the transcript leakage problem, we propose a Bayesian hierarchical model-based method, <strong>DeLeakage</strong> (<strong>De</strong>contamination for Transcript <strong>Leakage</strong>), which decomposes the observed transcript counts of each cell into its endogenous expression and transcripts leaked from other cells through a diffusion process Our model includes a different diffusion parameter for each gene, thus allowing the capture of gene-specific properties that affect leakage patterns.</p>
-<h2 id="license"><strong>License</strong></h2>
+<h2 id="overview">Overview</h2>
+<p>Spatial transcriptomics (ST) technologies have revolutionized our understanding of tissue organization, but they suffer from a <strong>prevalent transcript leakage problem</strong>: transcripts expressed by one cell diffuse to neighboring cells and are incorrectly detected as endogenous expression. This issue affects all major imaging-based and sequencing-based platforms, across multiple tissues and species, leading to inaccurate expression quantification, biased cell-type annotation, and false detection of spatially dependent gene expression.</p>
+<p>To tackle this problem, we propose a <strong>reference-free Bayesian hierarchical model-based method</strong>, <strong>DeLeakage</strong> (<strong>De</strong>contamination for Transcript <strong>Leakage</strong>), which decomposes the observed transcript counts of each cell into its endogenous expression and transcripts leaked from other cells through a diffusion process. Our model includes <strong>gene-specific diffusion parameters</strong> to capture the distinct leakage properties of different transcripts, a critical feature missing from conventional deconvolution and denoising methods.</p>
+<h2 id="key-features">Key Features</h2>
+<ul>
+<li><strong>Platform-agnostic</strong>: Works with all major spatial transcriptomics technologies (MERFISH, Xenium, Pixel-seq, and more)</li>
+<li><strong>Reference-free</strong>: No external scRNA-seq reference required, avoiding batch effects and missing cell type issues</li>
+<li><strong>Gene-specific correction</strong>: Models distinct diffusion rates for individual genes, matching biological reality</li>
+<li><strong>Theoretically guaranteed</strong>: Proven model identifiability under easily satisfied conditions</li>
+<li><strong>Highly scalable</strong>: GPU-accelerated parallel MCMC algorithm processes 4 million cells in ~1 hour</li>
+<li><strong>Downstream improvement</strong>: Significantly enhances cell-type annotation accuracy and reduces false positives in differential expression analysis</li>
+</ul>
+<h2 id="performance-highlights">Performance Highlights</h2>
+<p>DeLeakage substantially outperforms existing ST denoising methods (SPLIT, SpotClean) on both simulated and real data:</p>
+<ul>
+<li>Reduces co-detection of mutually exclusive cell-type markers by <strong>70-80%</strong></li>
+<li>Improves Adjusted Rand Index (ARI) for cell-type clustering by <strong>71.7%</strong></li>
+<li>Eliminates false spatial auto-correlation signals caused by transcript leakage</li>
+<li>Preserves true endogenous expression levels while effectively removing contamination</li>
+</ul>
+<h2 id="supported-data-types">Supported Data Types</h2>
+<ul>
+<li>Imaging-based ST: MERFISH, Xenium, seqFISH, smFISH</li>
+<li>Sequencing-based ST: Pixel-seq, Slide-seq, Visium (high-resolution)</li>
+<li>Species: Human, mouse, and other model organisms</li>
+<li>Tissues: Brain, heart, and all other tissue types</li>
+</ul>
+<h2 id="quick-start">Quick Start</h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Install DeLeakage</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>pip<span class="w"> </span>install<span class="w"> </span>deleakage
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Basic usage</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">deleakage</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">deleakage</span><span class="w"> </span><span class="kn">import</span> <span class="n">DeLeakage</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="c1"># Initialize model (adata: AnnData object with spatial coordinates)</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="n">model</span> <span class="o">=</span> <span class="n">DeLeakage</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">spatial_key</span><span class="o">=</span><span class="s2">&quot;spatial&quot;</span><span class="p">,</span> <span class="n">n_cell_types</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="c1"># Run decontamination</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="c1"># Get corrected expression matrix</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="n">corrected_adata</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_corrected_adata</span><span class="p">()</span>
+</code></pre></div>
+<p>See our <a href="install/">documentation</a> and <a href="quickstart/">documentation</a> for detailed tutorials and advanced usage.</p>
+<h2 id="citation">Citation</h2>
+<p>If you use DeLeakage in your research, please cite our paper:</p>
+<blockquote>
+<p>Christina Huan Shi, Yibo Zhai, Savio Ho-Chit Chow, Liangbang Li, Chase M. Carver, Marcos G. Teneche, Jesus Flores, Colin Kern, Peter D. Adams, Bing Ren, Marissa J. Schafer, Quan Zhu, Yingying Wei, Kevin Y. Yip. Correcting spatial transcriptomics data affected by a prevalent transcript leakage problem across platforms, species, and tissues. 2026.</p>
+</blockquote>
+<h2 id="authors">Authors</h2>
+<ul>
+<li>Christina Huan Shi (Sanford Burnham Prebys Medical Discovery Institute)</li>
+<li>Yibo Zhai (The Chinese University of Hong Kong)</li>
+<li>Liangbang Li (The Chinese University of Hong Kong)</li>
+<li>Savio Ho-Chit Chow (Sanford Burnham Prebys Medical Discovery Institute)</li>
+<li>Yingying Wei (The Chinese University of Hong Kong)</li>
+<li>Kevin Y. Yip (Sanford Burnham Prebys Medical Discovery Institute)</li>
+</ul>
+<h2 id="code-data">Code &amp; Data</h2>
+<ul>
+<li>Source code: <a href="https://github.com/Yip-Lab/DeLeakage">https://github.com/Yip-Lab/DeLeakage</a></li>
+<li>Analysis code: <a href="https://github.com/Yip-Lab/DeLeakage-analysis">https://github.com/Yip-Lab/DeLeakage-analysis</a></li>
+</ul>
+<h2 id="license">License</h2>
 <p>Copyright (c) 2026 DeLeakage authors</p>
-<p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
 <p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
-<p>THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
 
 
 
