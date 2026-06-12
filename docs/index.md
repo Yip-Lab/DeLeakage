@@ -1,5 +1,4 @@
 # DeLeakage
-## Correcting spatial transcriptomics data affected by prevalent transcript leakage
 
 We are excited to release DeLeakage v1.0! To install, please follow the instructions in our [install page](install.md). Try our interactive demo [here](quickstart.md).
 
