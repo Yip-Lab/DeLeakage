@@ -65,7 +65,6 @@ See our [install page](install.md) and [quickstart](quickstart.md) for detailed 
 
 If you use DeLeakage in your research, please cite our paper:
 
-> Christina Huan Shi, Yibo Zhai, Savio Ho-Chit Chow, Liangbang Li, Chase M. Carver, Marcos G. Teneche, Jesus Flores, Colin Kern, Peter D. Adams, Bing Ren, Marissa J. Schafer, Quan Zhu, Yingying Wei, Kevin Y. Yip. Correcting spatial transcriptomics data affected by a prevalent transcript leakage problem across platforms, species, and tissues. 2026.
 
 ## Authors
 
