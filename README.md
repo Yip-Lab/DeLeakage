@@ -1,139 +1,91 @@
 # DeLeakage
 
-Python bindings for the `Contamination` C++ implementation, built with `pybind11`, `CMake`, and OpenMP.
+We are excited to release DeLeakage v1.0! To install, please follow the instructions in our [install page](install.md). Try our interactive demo [here](quickstart.md).
+
+<p align="center">
+  <img src="images/workflow.png" width="100%" alt="DeLeakage Workflow">
+</p>
 
 ## Overview
 
-This package exposes the C++ implementation as a Python module named `deContamination`.
-It is intended for use in scripted workflows and batch experiments without manual compilation.
+Spatial transcriptomics (ST) technologies have revolutionized our understanding of tissue organization, but they suffer from a **prevalent transcript leakage problem**: transcripts expressed by one cell diffuse to neighboring cells and are incorrectly detected as endogenous expression. This issue affects all major imaging-based and sequencing-based platforms, across multiple tissues and species, leading to inaccurate expression quantification, biased cell-type annotation, and false detection of spatially dependent gene expression.
 
-## Installation
+To tackle this problem, we propose a **reference-free Bayesian hierarchical model-based method**, **DeLeakage** (**De**contamination for Transcript **Leakage**), which decomposes the observed transcript counts of each cell into its endogenous expression and transcripts leaked from other cells through a diffusion process. Our model includes **gene-specific diffusion parameters** to capture the distinct leakage properties of different transcripts, a critical feature missing from conventional deconvolution and denoising methods.
 
-Install the wheel file with `pip`:
+## Key Features
+
+- **Platform-agnostic**: Works with all major spatial transcriptomics technologies (MERFISH, Xenium, Pixel-seq, and more)
+- **Reference-free**: No external scRNA-seq reference required, avoiding batch effects and missing cell type issues
+- **Gene-specific correction**: Models distinct diffusion rates for individual genes, matching biological reality
+- **Theoretically guaranteed**: Proven model identifiability under easily satisfied conditions
+- **Highly scalable**: GPU-accelerated parallel MCMC algorithm processes 4 million cells in ~1 hour
+- **Downstream improvement**: Significantly enhances cell-type annotation accuracy and reduces false positives in differential expression analysis
+
+## Performance Highlights
+
+DeLeakage substantially outperforms existing ST denoising methods (SPLIT, SpotClean) on both simulated and real data:
+
+- Reduces co-detection of mutually exclusive cell-type markers by **70-80%**
+- Improves Adjusted Rand Index (ARI) for cell-type clustering by **71.7%**
+- Eliminates false spatial auto-correlation signals caused by transcript leakage
+- Preserves true endogenous expression levels while effectively removing contamination
+
+## Supported Data Types
+
+- Imaging-based ST: MERFISH, Xenium, seqFISH, smFISH
+- Sequencing-based ST: Pixel-seq, Slide-seq, Visium (high-resolution)
+- Species: Human, mouse, and other model organisms
+- Tissues: Brain, heart, and all other tissue types
+
+## Quick Start
 
 ```bash
-python3 -m pip install decontamination-0.1.0-cp310-cp310-linux_x86_64.whl
+# Install DeLeakage
+pip install deleakage
 ```
-
-After installation, verify the module:
-
-```bash
-python3 -c "import deContamination; print(deContamination.__file__)"
-```
-
-## Usage
-
-A minimal test script is shown below.
 
 ```python
-# test_decontamination.py
-from pathlib import Path
-import traceback
-import deContamination as dc
+# Basic usage
+import deleakage
+from deleakage import DeLeakage
 
+# Initialize model (adata: AnnData object with spatial coordinates)
+model = DeLeakage(adata, spatial_key="spatial", n_cell_types=10)
 
-def main():
-    out_dir = Path("./output/")
-    out_dir.mkdir(parents=True, exist_ok=True)
+# Run decontamination
+model.fit()
 
-    print("Loaded module from:", deContamination.__file__)
-    print("Available attributes:")
-    print([x for x in dir(deContamination) if not x.startswith("_")])
-
-    params = {
-        "G": 300,
-        "K": 3,
-        "N_nei": 49,
-        "N": 10000,
-        "N_MB": 50,
-        "N_tail": 454,
-        "n_record": 3000,
-        "seed": 123,
-        "output_list": "./output/",
-        "data_name": "./data/Y_obs.txt",
-        "nei_name": "./data/nei_list.txt",
-        "dist_name": "./data/nei_dist.txt",
-        "label_name": "./data/Y_label.txt",
-        "cell_size_name": "./data/cell_size.txt",
-        "MB_dir": "./data/MB/",
-    }
-
-    print("Start running...")
-    try:
-        ret = dc.run(
-            params["G"],
-            params["K"],
-            params["N_nei"],
-            params["N"],
-            params["N_MB"],
-            params["N_tail"],
-            params["n_record"],
-            params["seed"],
-            params["output_list"],
-            params["data_name"],
-            params["nei_name"],
-            params["dist_name"],
-            params["label_name"],
-            params["cell_size_name"],
-            params["MB_dir"],
-        )
-        print("Finished. Return value:", ret)
-    except Exception:
-        print("Run failed with exception:")
-        traceback.print_exc()
-
-
-if __name__ == "__main__":
-    main()
+# Get corrected expression matrix
+corrected_adata = model.get_corrected_adata()
 ```
 
-Run the script with:
+See our [install page](install.md) and [quickstart](quickstart.md) for detailed tutorials and advanced usage.
 
-```bash
-python3 test_decontamination.py
-```
+## Citation
 
-## Input files
+If you use DeLeakage in your research, please cite our paper:
 
-The package expects the same input files used by the original C++ workflow.
-Update the paths in the Python script to match your local directory layout.
 
-Typical inputs include:
+## Authors
 
-* observed data file
-* neighbor list file
-* neighbor distance file
-* label file
-* cell size file
-* MB directory
-* true Z file, if enabled in your binding
+- Christina Huan Shi (Sanford Burnham Prebys Medical Discovery Institute)
+- Yibo Zhai (The Chinese University of Hong Kong)
+- Liangbang Li (The Chinese University of Hong Kong)
+- Savio Ho-Chit Chow (Sanford Burnham Prebys Medical Discovery Institute)
+- Yingying Wei (The Chinese University of Hong Kong)
+- Kevin Y. Yip (Sanford Burnham Prebys Medical Discovery Institute)
 
-## Output
+## Code & Data
 
-Results are written to the output directory passed to the Python function.
-In the example above, all outputs are written under `./output/`.
-
-## Notes
-
-* The module name is `deContamination`.
-* The callable function name depends on the pybind11 binding.
-* The argument order must match the C++ binding exactly.
-* If the wheel is rebuilt for another Python version or operating system, a new wheel is required.
-
-## Troubleshooting
-
-### `ModuleNotFoundError: No module named 'deContamination'`
-
-Check that the wheel was installed in the same Python environment used to run the script.
-
-### `No callable function found`
-
-Check the function name exported in the `PYBIND11_MODULE(...)` binding.
-
-### Output files are missing
-
-Confirm that the output directory exists and that the input paths are correct.
+- Source code: [https://github.com/Yip-Lab/DeLeakage](https://github.com/Yip-Lab/DeLeakage)
+- Analysis code: [https://github.com/Yip-Lab/DeLeakage-analysis](https://github.com/Yip-Lab/DeLeakage-analysis)
 
 ## License
 
-Add your license information here.
+Copyright (c) 2026 DeLeakage authors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
