@@ -24,8 +24,8 @@ theme:
     - content.code.copy
 
 # 右上角 GitHub 仓库链接
-repo_url: https://github.com/JasonLiDataSci/deContamination
-repo_name: deContamination
+repo_url: https://github.com/JasonLiDataSci/DeLeakage
+repo_name: DeLeakage
 
 # 顶部导航栏
 nav:
