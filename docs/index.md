@@ -59,7 +59,7 @@ model.fit()
 corrected_adata = model.get_corrected_adata()
 ```
 
-See our [documentation](install.md) and [documentation](quickstart.md) for detailed tutorials and advanced usage.
+See our [install page](install.md) and [quickstart](quickstart.md) for detailed tutorials and advanced usage.
 
 ## Citation
 
